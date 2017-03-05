@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include ../../../../../views/head %>
+<style type='text/css'>
+	th{
+		font-family:Microsoft YaHei;
+		background-color:#3BBF5A;
+		color:white
+	}
+	#datatable tbody tr td{
+		font-family:Microsoft YaHei;
+		font-size:16px;
+	}
+</style>
+</head>
+
+<body ng-app='reSpeed' ng-controller='reSpeedctrl'>
+<% include ../../../../../views/header %>
+<% include ../../../../../views/menu %>
+<div class="container-fluid" id="pcont">
+         <div class="page-head">
+			<h2>历史速度</h2>
+			<ol class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home"></i>  主页</a></li>
+			  <li><a href="#">系统</a></li>
+			  <li><a href="#">历史速度</li>
+			</ol>
+		</div>	
+        <div class="content">
+    <div style='margin-bottom: 35px;  margin-top: 15px;'>
+        工单：
+        <input type='text' id='order' ng-model = 'order' placeholder='11MO01-16120007'/>
+        起始时间:
+        <input type='text' id='str_time' ng-model = 'str_time' placeholder='2017-02-17 0:00:00'/>
+        结束时间:
+         <input type='text' id='end_time' ng-model = 'end_time' placeholder='2017-02-18 10:00:00'/>
+         <div class='btn btn-info btn-sm' ng-click='search()'>查询</div>
+        </div>
+    </div>
+    <div id='container' style='height:700px;'>
+
+    </div>
+        </div>
+
+
+
+
+
+	
+    
+
+  <!-- <script src="js/echarts.js"></script> -->
+<% include ../../../../../views/all_js %>
+<script src='./SystemData/web/controller/reSpeedController.js'></script>
+<script src='./SystemData/web/javascript/echarts.Common.min.js'></script>
+</body>
+</html>

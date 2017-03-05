@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include ../../../../../views/head %>
+<style type='text/css'>
+	th{
+		font-family:Microsoft YaHei;
+		background-color:#3BBF5A;
+		color:white
+	}
+	#datatable tbody tr td{
+		font-family:Microsoft YaHei;
+		font-size:16px;
+	}
+</style>
+</head>
+
+<body ng-app='reProduction' ng-controller='reProductionctrl'>
+<% include ../../../../../views/header %>
+<% include ../../../../../views/menu %>
+<div class="container-fluid" id="pcont">
+         <div class="page-head">
+			<h2>历史速度</h2>
+			<ol class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home"></i>  主页</a></li>
+			  <li><a href="#">系统</a></li>
+			  <li><a href="#">历史速度</li>
+			</ol>
+		</div>	
+        <div class="content">
+    <div>
+        工单：
+        <input type='text' id='order'/>
+        起始时间:
+        <input type='text' id='str_time'/>
+        结束时间:
+         <input type='text' id='end_time'/>
+         <div class='btn btn-info btn-sm' ng-click='search()'>查询</div>
+        </div>
+    </div>
+    <div id='container' style='height:700px;'>
+
+    </div>
+        </div>
+
+
+
+
+
+	
+    
+
+  <!-- <script src="js/echarts.js"></script> -->
+<% include ../../../../../views/all_js %>
+<script src='./SystemData/web/controller/reProductionController.js'></script>
+<script src='./SystemData/web/javascript/echarts.Common.min.js'></script>
+</body>
+</html>

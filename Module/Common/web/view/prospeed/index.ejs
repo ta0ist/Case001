@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include ../../../../../views/head %>
+<style type='text/css'>
+	th{
+		font-family:Microsoft YaHei;
+		background-color:#3ba8bf;
+		color:white
+	}
+	#datatable tbody tr td{
+		font-family:Microsoft YaHei;
+		font-size:16px;
+	}
+</style>
+
+</head>
+
+<body ng-app='prospeed' ng-controller='prospeedctrl'>
+<% include ../../../../../views/header %>
+<% include ../../../../../views/menu %>
+<div class="container-fluid" id="pcont">
+    <div class="page-head">
+			<h2>产品速度</h2>
+			<ol class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home"></i>  主页</a></li>
+			  <li><a href="#">系统</a></li>
+			  <li><a href="#">产品速度</li>
+			</ol>
+		</div>	
+   <div class="cl-mcont">
+		
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block-flat">
+					
+
+						<div class="content">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="datatable" >
+									<thead>
+										<tr class="titled">
+											<th width='4%' style='background-color:#3ba8bf;color:white'>序号</th>
+									    <th>产品订单号</th>
+											<th>产品</th>
+											<th>预计速度</th>
+											<th>设置速度范围</th>
+										</tr> 
+									</thead>
+									<tbody >
+										<tr>
+											<td>{{$index+1}}</td>
+											<td>111</td>
+											<td>222</td>
+											<td>333</td>
+											<td class="center">
+											    <div>
+											      <div data-toggle="modal" data-target="#mod-info" class='btn btn-sm' ng-style='color'>编辑<i class='fa fa-pencil'></i></div> 
+                            <span><input type='text' name='' ng-model='speedrange' style='padding-bottom: 5px'></span>
+														<span><select ng-model="selectedColor" ng-options="x for x in color" style='padding-bottom: 4px'></select></span>
+													</div>         
+						          </td>
+										</tr>
+									
+									</tbody>
+								</table>							
+							</div>
+						</div>
+					</div>				
+				</div>
+			</div>
+
+
+
+
+			
+		  </div>
+		</div> 
+</div>
+
+<div class="modal fade" id="mod-info" tabindex="-1" role="dialog">
+		    <div class="modal-dialog">
+		    <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            </div>
+                
+                <div class="modal-body">
+		            <div class="text-center">
+			            <h4>设置速度范围<h4>
+			            </div>
+			            <div class="form-group">
+				            <input type="text" name="" class="form-control" ng-model='speedrange'>
+			            </div>
+			       <div     style='margin-left: 445px' >
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				    <button type="button" class="btn btn-success" data-dismiss="modal">确认</button>
+			    </div>
+			    </div>
+  <!-- <script src="js/echarts.js"></script> -->
+<% include ../../../../../views/all_js %>
+<script src='./javascripts/jquery.datatables.min.js'></script>
+<script src='./javascripts/datatables.js'></script>
+<script src='./Common/web/controller/prospeedController.js'></script>
+</body>
+</html>

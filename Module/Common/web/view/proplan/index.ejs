@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include ../../../../../views/head %>
+<link rel="stylesheet" type="text/css" href="./javascripts/bootstrap.datetimepicker/css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" type="text/css" href="./javascripts/bootstrap.datetimepicker/less/datetimepicker.less" />
+<style type='text/css'>
+	th{
+		font-family:Microsoft YaHei;
+		background-color:#3ba8bf;
+		color:white
+	}
+	#proplantable tbody tr td{
+		font-family:Microsoft YaHei;
+		font-size:16px;
+	}
+</style>
+</head>
+   
+<body ng-app='proplan' ng-controller='proplanctrl'>
+<% include ../../../../../views/header %>
+<% include ../../../../../views/menu %>
+<div class="container-fluid" id="pcont">
+	<div class="page-head">
+		<h2>计划排产</h2>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-home"></i>  主页</a></li>
+			<li><a href="#">系统</a></li>
+			<li><a href="#">计划排产</li>
+		</ol>
+	</div>	
+	
+  
+<div class="col-sm-6 col-md-12">
+	<div class="tab-container">
+		<ul class="nav nav-tabs flat-tabs">
+			<li class="active" id='del'><a href="#ing" data-toggle="tab">进行中</a></li>
+			<li><a href="#null" data-toggle="tab" >未开始</a></li>
+			<li><a href="#stop" data-toggle="tab">停止</a></li>
+			<li><a href="#finish" data-toggle="tab">完成</a></li>
+		</ul>
+ 
+	    <div class="tab-content">
+			<div class='header'>
+				<button data-toggle="modal" data-target="#mod-success" type="button" class="btn btn-primary btn-rad">新增<i class="fa fa-plus-circle"></i></button>
+				<button type="button" class="btn btn-default btn-rad" ng-click="importExcel()">导入排产计划</button>
+      </div>
+			<div class="tab-pane active cont" id="ing">
+				<table class="table table-bordered" id="datatable2" >
+                  <thead>
+                    <tr>
+                      <th>序号</th>
+                      <th>生产订单</th>
+                      <th>料品名称</th>
+                      <th>存货代码</th>
+                      <th>生产数量</th>
+					  <th>计划开始时间</th>
+					  <th>计划完工时间</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="odd gradeX" ng-repeat='plan in proplan_ing'>
+                      <td>{{$index+1}}</td>
+					  <td>{{plan.Production_Order}}</td>
+                      <td>{{plan.Material_Name}}</td>
+                      <td class="center"> {{plan.Inventory_Code}}</td>
+                      <td class="center">{{plan.Product_Num}}</td>
+					  <td class="center">{{plan.Plan_Start_Time|getdate}}</td>
+					  <td class="center">{{plan.Plan_End_Time |getdate}}</td>
+                    </tr>
+				  </tbody>
+				</table>
+			</div>
+
+			<div class="tab-pane cont" id="null">
+				<table class="table table-bordered" id="datatable3" >
+                  <thead>
+                    <tr>
+                      <th>序号</th>
+                      <th>生产订单</th>
+                      <th>料品名称</th>
+                      <th>存货代码</th>
+                      <th>生产数量</th>
+					  <th>计划开始时间</th>
+					  <th>计划完工时间</th>
+					  <th>是否启用</th>
+					  <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="odd gradeX" ng-repeat='plan in proplan_un'>
+                      <td>{{$index+1}}</td>
+					            <td>{{plan.Production_Order}}</td>
+                      <td>{{plan.Material_Name}}</td>
+                      <td class="center"> {{plan.Inventory_Code}}</td>
+                      <td class="center">{{plan.Product_Num}}</td>
+					  <td class="center">{{plan.Plan_Start_Time|getdate}}</td>
+					  <td class="center">{{plan.Plan_End_Time |getdate}}</td>
+					  <td class="center">
+					  	<div class="switch data_unpro" data-on="success" data-off="warning" id='{{$index}}'>
+						  <input type="checkbox" ng-checked="isSelected(plan.Enable)">
+					  </div></td>
+					  <td class="center">
+						         <div data-toggle="modal" data-target="#mod-success" class='btn btn-sm btn-info btn-rad' ng-click='bindModel($index)'>修改<i class='fa fa-pencil'></i></div>
+										 <div class='btn btn-sm btn-danger' ng-click="deleteproplan($index)">删除<i class='fa fa-trash-o'></i></div></td>
+                    </tr>
+				  </tbody>
+				</table>
+			</div>
+  
+			<div class="tab-pane cont" id="stop">
+				<table class="table table-bordered" id="datatable4" >
+                  <thead>
+                    <tr>
+                      <th>序号</th>
+                      <th>生产订单</th>
+                      <th>料品名称</th>
+                      <th>存货代码</th>
+                      <th>生产数量</th>
+					            <th>计划开始时间</th>
+					            <th>计划完工时间</th>
+											<th>是否启用</th>
+                    </tr>
+                  </thead> 
+                  <tbody>
+                    <tr class="odd gradeX" ng-repeat='plan in proplan_stop'>
+                      <td>{{$index+1}}</td>
+					            <td>{{plan.Production_Order}}</td>
+                      <td>{{plan.Material_Name}}</td>
+                      <td class="center">{{plan.Inventory_Code}}</td>
+                      <td class="center">{{plan.Product_Num}}</td>
+					            <td class="center">{{plan.Plan_Start_Time|getdate}}</td>
+					            <td class="center">{{plan.Plan_End_Time |getdate}}</td>
+											<td class="center">
+					  	        	<div class="switch data_stop" data-on="success" data-off="warning" id='{{$index}}'>
+						            <input type="checkbox" ng-checked="isSelected(plan.Enable)">
+					              </div>
+											</td>
+                    </tr>
+				  </tbody>
+				</table>
+			</div>
+  
+			<div class="tab-pane cont" id="finish">
+				<table class="table table-bordered" id="datatable5" >
+                  <thead>
+                    <tr>
+                      <th>序号</th>
+                      <th>生产订单</th>
+                      <th>料品名称</th>
+                      <th>存货代码</th>
+                      <th>生产数量</th>
+					  <th>计划开始时间</th>
+					  <th>计划完工时间</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="odd gradeX" ng-repeat='plan in proplan_finish'>
+                      <td>{{$index+1}}</td>
+					  <td>{{plan.Production_Order}}</td>
+                      <td>{{plan.Material_Name}}</td>
+                      <td class="center"> {{plan.Inventory_Code}}</td>
+                      <td class="center">{{plan.Product_Num}}</td>
+					  <td class="center">{{plan.Plan_Start_Time|getdate}}</td>
+					  <td class="center">{{plan.Plan_End_Time |getdate}}</td>
+                    </tr>
+				  </tbody>
+				</table>
+			</div>
+
+		</div>					
+	</div>
+<div>  
+
+
+<!--新增-->
+<div class="modal fade" id="mod-success" tabindex="-1" role="dialog">
+		    <div class="modal-dialog">
+		    <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            </div>
+                
+                <div class="modal-body">
+		            <div class="text-center">
+			            <h4>新增/修改计划排产<h4>
+			        </div>
+						<div class="form-group">
+			                <label>生产订单</label>
+				            <input type="text" name="" ng-model='proplan.Production_Order' class="form-control">
+			            </div>
+						<div class="form-group">
+						    <label>需求分类</label>
+							<input type="text" name="" ng-model='proplan.Requirements_Classification' class="form-control">
+					    </div>
+						<div class="form-group">
+			                <label>料品名称</label>
+				            <input type="text" name="" ng-model='proplan.Material_Name' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>存货代码</label>
+				            <input type="text" name="" ng-model='proplan.Inventory_Code' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>生产数量</label>
+				            <input type="number" name="" ng-model='proplan.Product_Num' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>预计速度</label>
+				            <input type="text" name="" ng-model='proplan.Estimated_Speed' class="form-control">
+			            </div>
+							<div class="form-group">
+			                <label>计划开始时间</label>
+				            <div class="input-group date datetime col-md-5 col-xs-7" data-start-view="4" data-date="2017-1-20T00:00Z" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" ng-model="proplan.Plan_Start_Time" />
+                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                  </div>	
+						</div>
+						  	<div class="form-group">
+			                <label>计划完成时间</label>
+				            <div class="input-group date datetime col-md-5 col-xs-7" data-start-view="4" data-date="2017-1-20T00:00:00Z" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" ng-model="proplan.Plan_End_Time" />
+                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                  </div>
+						<div class="form-group">
+			                <label>生产单位</label>
+				            <input type="text" name="" ng-model='proplan.Unit' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>速度I级警报范围</label>
+				            <input type="text" name="" ng-model='proplan.Speed_Color_One' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>速度II级警报范围</label>
+				            <input type="text" name="" ng-model='proplan.Speed_Color_Two' class="form-control">
+			            </div>
+			    </div>
+			  
+			    <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click='add()'>确认新增</button>
+					<button type="button" class="btn btn-success" data-dismiss="modal" ng-click='updateproplan()'>确认修改</button>
+			    </div>
+			</div>
+			</div>
+	    </div>
+
+<!--确认删除-->		
+<div class="modal fade" id="mod-error" tabindex="-1" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="text-center">
+                        <div class="i-circle danger"><i class="fa fa-times"></i></div>
+                        <p>是否确认删除？</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteproplan($index)">确认删除</button>
+                    </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+							  </div><!-- /.modal -->
+		
+
+<!--修改
+<div class="modal fade" id="mod-info" tabindex="-1" role="dialog">
+		    <div class="modal-dialog">
+		    <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            </div>
+                 
+                <div class="modal-body">
+		            <div class="text-center">
+			            <h4>修改排产信息<h4>
+			        </div>
+						<div class="form-group">
+			                <label>生产订单</label>
+				            <input type="text" name="" ng-model='proplan.Production_Order' class="form-control">
+			            </div>
+						<div class="form-group">
+						    <label>需求分类</label>
+							<input type="text" name="" ng-model='proplan.Requirements_Classification' class="form-control">
+					    </div>
+						<div class="form-group">
+			                <label>料品名称</label>
+				            <input type="text" name="" ng-model='proplan.Material_Name' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>存货代码</label>
+				            <input type="text" name="" ng-model='proplan.Inventory_Code' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>生产数量</label>
+				            <input type="text" name="" ng-model='proplan.Product_Num' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>预计速度</label>
+				            <input type="text" name="" ng-model='proplan.Estimated_Speed' class="form-control">
+			            </div>
+			               	<div class="form-group">
+			                <label>计划开始时间</label>
+				            <div class="input-group date datetime col-md-5 col-xs-7" data-start-view="4" data-date="2017-1-20T00:00:00Z" data-date-format="yyyy-mm-dd HH:mm:ss" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" ng-model="proplan.Plan_Start_Time" />
+                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                  </div>	
+						</div>
+						  	<div class="form-group">
+			                <label>计划完成时间</label>
+				            <div class="input-group date datetime col-md-5 col-xs-7" data-start-view="4" data-date="2017-1-20T00:00:00Z" data-date-format="yyyy-mm-dd HH:mm:ss" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" ng-model="proplan.Plan_End_Time" />
+                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                  </div>
+						<div class="form-group">
+			                <label>生产单位</label>
+				            <input type="text" name="" ng-model='proplan.Unit' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>速度I级警报范围</label>
+				            <input type="text" name="" ng-model='proplan.Speed_Color_One' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>速度II级警报范围</label>
+				            <input type="text" name="" ng-model='proplan.Speed_Color_Two' class="form-control">
+			            </div>
+			    </div>
+			 
+			    <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click='updateproplan()'>确认</button>
+			    </div>
+			</div>
+			</div>
+	    </div>-->
+
+
+
+
+
+<!-- <script src="js/echarts.js"></script> -->
+<% include ../../../../../views/all_js %>
+<script src='./javascripts/jquery.datatables.min.js'></script>
+<script src='./javascripts/datatables.js'></script>
+<script src='./Common/web/controller/proplanController.js'></script>
+<script src="./javascripts/dropzone/dropzone.js"></script>
+<script src="./javascripts/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include ../../../../../views/head %>
+<style type='text/css'>
+	th{
+		font-family:Microsoft YaHei;
+		background-color:#3ba8bf;
+		color:white
+	}
+	#datatable tbody tr td{
+		font-family:Microsoft YaHei;
+		font-size:16px;
+	}
+</style>
+</head>
+
+<body ng-app='product' ng-controller='productctrl'>
+<% include ../../../../../views/header %>
+<% include ../../../../../views/menu %>
+<div class="container-fluid" id="pcont">
+         <div class="page-head">
+			<h2>产品信息</h2>
+			<ol class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home"></i>  主页</a></li>
+			  <li><a href="#">系统</a></li>
+			  <li><a href="#">产品信息</li>
+			</ol>
+		</div>	
+
+
+		<div class="cl-mcont">
+		
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block-flat">
+					<div class='header'> 
+
+    <button data-toggle="modal" data-target="#mod-success" type="button" class="btn btn-primary btn-rad">新增<i class="fa fa-plus-circle"></i></button>
+ 
+  </div>
+						<div class="content">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="datatable" >
+									<thead>
+										<tr class="titled">
+											<th width='4%' style='background-color:#3ba8bf;color:white'>序号</th>
+											<th>产品名称</th>
+											<th>预计速度</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody >
+										<tr ng-repeat='product in productlist'>
+											<td>{{$index+1}}</td>
+											<td>{{product.Product_Type}}</td> 
+											<td>{{product.Estimated_Speed}}</td>
+											<td class="center">
+											<div class='btn btn-sm btn-info' data-toggle="modal" data-target="#mod-update">修改<i class='fa fa-pencil'></i></div>
+											<div class='btn btn-sm btn-danger' ng-click='DeleteProductInfor($index)'>删除<i class='fa fa-trash-o'></i></div>
+											</td>
+										</tr>
+									
+									</tbody>
+								</table>							
+							</div>
+						</div>
+					</div>				
+				</div>
+			</div>
+					
+
+			
+		  </div>
+		</div> 
+</div>
+   <!--新增-->
+		 <div class="modal fade" id="mod-success" tabindex="-1" role="dialog">
+		    <div class="modal-dialog">
+		    <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            </div>                
+                <div class="modal-body">
+		            <div class="text-center">
+			            <h4>新增产品信息<h4>
+			            </div>
+			            <div class="form-group">
+			                <label>产品名称</label>
+				            <input type="text" name="" ng-model='product.Product_Type' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>预计速度</label>
+				            <input type="text" name="" ng-model='product.Estimated_Speed' class="form-control">
+			            </div>			       
+			    </div>
+			 
+			    <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click='add()'>确认</button>
+			    </div>
+			</div>
+			</div>
+	    </div>
+ 
+     <!--修改-->
+        <div class="modal fade" id="mod-update" tabindex="-1" role="dialog" ng-repeat='product in productlist'>
+		    <div class="modal-dialog">
+		    <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            </div>                
+                <div class="modal-body">
+		            <div class="text-center">
+			            <h4>修改产品信息<h4>
+			            </div>
+			            <div class="form-group">
+			                <label>产品名称</label>
+				            <input type="input" name="" ng-model='product.Product_Type' class="form-control">							
+			            </div>
+						<div class="form-group">
+			                <label>预计速度</label>
+				            <input type="text" name="" ng-model='product.Estimated_Speed' class="form-control">
+							
+			            </div>			       
+			    </div>
+			 
+			    <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click='updateproduct($index)'>确认</button>
+			    </div>
+			</div>
+			</div>
+	    </div>
+    
+    
+
+  <!-- <script src="js/echarts.js"></script> -->
+<% include ../../../../../views/all_js %>
+<script src='./javascripts/jquery.datatables.min.js'></script>
+<script src='./javascripts/datatables.js'></script>
+<script src='./Common/web/controller/productController.js'></script>
+</body>
+</html>

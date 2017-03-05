@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include ../../../../../views/head %>
+<style type='text/css'>
+	th{
+		font-family:Microsoft YaHei;
+		background-color:#3ba8bf;
+		color:white
+	}
+	#datatable tbody tr td{
+		font-family:Microsoft YaHei;
+		font-size:16px;
+	}
+</style>
+</head>
+
+<body ng-app='line' ng-controller='linectrl'>
+<% include ../../../../../views/header %>
+<% include ../../../../../views/menu %>
+<div class="container-fluid" id="pcont">
+         <div class="page-head">
+			<h2>产线信息</h2>
+			<ol class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home"></i>  主页</a></li>
+			  <li><a href="#">系统</a></li>
+			  <li><a href="#">产线信息</li>
+			</ol>
+		</div>	
+
+
+		<div class="cl-mcont">
+		
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block-flat">
+					<div class='header'> 
+
+    <button data-toggle="modal" data-target="#mod-success" type="button" class="btn btn-primary btn-rad" ng-click='add()'>新增<i class="fa fa-plus-circle"></i></button>
+ 
+  </div>
+						<div class="content" >
+							<div class="table-responsive">
+								<table class="table table-bordered" id="datatable" >
+									<thead>
+										<tr class="titled">
+											<th width='4%' style='background-color:#3ba8bf;color:white'>序号</th>
+											<th>产线ID</th>
+											<th>产线名称</th>
+											<th>产线IP地址</th>
+											<th>产线负责人</th>
+											<th>产线操作人</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody >
+										<tr ng-repeat='line in linelist'>
+											<td>{{$index+1}}</td>
+											<td>{{line.Line_No}}</td> 
+											<td>{{line.Line_Name}}</td>
+											<td>{{line.IP}}</td>
+											<td>{{line.Msg_Person_Name}}</td>
+											<td>{{line.Opt_Person_Name}}</td>
+												<td class="center">
+											<div class='btn btn-sm btn-info' ng-click='bindModel($index)' data-toggle="modal" data-target="#mod-success">修改产线信息<i class='fa fa-pencil'></i></div>
+											<div class='btn btn-sm btn-danger' ng-click='DeleteLineInfor($index)'>删除产线<i class='fa fa-trash-o'></i></div>
+										</tr>									
+									</tbody>
+								</table>							
+							</div>
+						</div>
+					</div>				
+				</div>
+			</div>
+					
+
+			
+		  </div>
+		</div> 
+</div>
+<!--增加-->
+		 <div class="modal fade" id="mod-success" tabindex="-1" role="dialog">
+		    <div class="modal-dialog">
+		    <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            </div>                
+                <div class="modal-body">
+		            <div class="text-center">
+			            <h4>产线信息<h4>
+			            </div>
+			            <div class="form-group">
+			                <label>产线ID</label>
+				            <input type="text" name="" id="read" ng-model='line.Line_No' class="form-control">
+			            </div>
+						<div class="form-group">
+			                <label>产线名称</label>
+				            <input type="text" name=""  ng-model='line.Line_Name' class="form-control">
+			            </div>
+						<div class="form-group">
+			            	<label>产线IP地址</label>
+				      	    <input type="text" name="" ng-model='line.IP' class="form-control">
+			            </div>
+                     <div class="form-group" id='human'>
+						<label>产线负责人</label>
+                            <select ng-change='AddMgePerson(x)' ng-model='x' style="width:200px;" ng-options='x.Person_Name for x in freepersonlist'>
+							</select>
+						<label>产线操作人</label>
+							<select ng-change='AddOptPerson(y)' ng-model='y' style="width:200px;" ng-options='y.Person_Name for y in freepersonlist'>
+							</select>
+					</div>
+			    <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click='Submit()'>确认</button>
+			    </div>
+			</div>
+			</div>
+	    </div>
+
+
+
+    
+
+  <!-- <script src="js/echarts.js"></script> -->
+<% include ../../../../../views/all_js %>
+<script src='./javascripts/jquery.datatables.min.js'></script>
+<script src='./javascripts/datatables.js'></script>
+<script src='./Common/web/controller/lineController.js'></script>
+</body>
+</html>

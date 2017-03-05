@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include ../../../../../views/head %>
+<link rel="stylesheet" type="text/css" href="./javascripts/bootstrap-select-1.12.2/dist/css/bootstrap-select.min.css" />
+<style type='text/css'>
+	th{
+		font-family:Microsoft YaHei;
+		background-color:#3ba8bf;
+		color:white
+	}
+	#datatable tbody tr td{
+		font-family:Microsoft YaHei;
+		font-size:16px;
+	}
+</style>
+
+</head>
+
+<body ng-app='reStatus' ng-controller='reStatusctrl'>
+<% include ../../../../../views/header %>
+<% include ../../../../../views/menu %>
+<div class="container-fluid" id="pcont">
+         <div class="page-head">
+			<h2>历史状态</h2>
+			<ol class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home"></i>  主页</a></li>
+			  <li><a href="#">系统</a></li>
+			  <li><a href="#">历史状态</li>
+			</ol>
+		</div>	
+        <div class="content">
+    <div style='margin-bottom: 35px;  margin-top: 15px;'>
+        产线：
+         <!--<select id="line" name="line" class="selectpicker show-tick form-control" multiple data-live-search="false" style='width:200px'>
+         </select>-->
+         <input type="text" id='line' placeholder='产线名称'/>
+        开始时间:
+        <input type='text' id='str_time' placeholder='2017-02-17 0:00:00'/>
+        结束时间：
+        <input type='text' id='end_time' placeholder='2017-02-17 0:00:00'/>
+         <div class='btn btn-info btn-sm' ng-click='search()'>查询</div>
+        </div>
+    </div>
+    <div class="cl-mcont">
+		
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block-flat">
+						<div class="content">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="datatable" >
+									<thead>
+										<tr class="titled">
+											<!--<th width='4%' style='background-color:#3ba8bf;color:white'>序号</th>-->
+											<th>产线名称</th>
+											<th>状态</th>
+											<th>开始时间</th>
+											<th>结束时间</th>
+										</tr>
+									</thead>
+									<tbody >
+										<tr ng-repeat='status in statuslist'>
+											<td>{{status.Name}}</td>
+											<td>{{status.StatusName}}</td>
+											<td>{{status.Starttime}}</td>
+                                            <td>{{status.EndTime}}</td>
+										</tr>
+									
+									</tbody>
+								</table>							
+							</div>
+						</div>
+					</div>				
+				</div>
+			</div>
+		  </div>
+		</div> 
+</div> 
+
+    <!--<div id='status' style='width:60%;height:20px;'>
+    <div ng-repeat='x in status_list' >
+        <div style='float:left;width:5%;padding-bottom: 10px;text-align:right;'>{{x.Name}}:</div>
+        <div style='float:left;width:95%;padding-bottom: 10px;'>
+            <div ng-repeat='y in x.Data' class='progress-bar' style='background-color:{{y.Color}};width:{{y.width}};height:20px'></div>
+        </div>
+        <img border="0" src="images/measurer.png" alt="measurer" style=' margin-left: 40px;margin-top: -20px; width:{{y.width}}; height:30px';>
+    </div>
+       
+    </div>-->
+        </div>
+
+
+
+
+
+	
+    
+
+  <!-- <script src="js/echarts.js"></script> -->
+<% include ../../../../../views/all_js %>
+<script src='./javascripts/bootstrap-select-1.12.2/dist/js/bootstrap-select.min.js'></script>
+<script src='./javascripts/bootstrap-select-1.12.2/dist/js/i18n/defaults-zh_CN.min.js'></script>
+<script src='./SystemData/web/controller/reStatusController.js'></script>
+
+</body>
+</html>

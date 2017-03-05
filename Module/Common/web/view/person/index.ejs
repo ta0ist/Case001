@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include ../../../../../views/head %>
+<style type='text/css'>
+	th{
+		font-family:Microsoft YaHei;
+		background-color:#3ba8bf;
+		color:white
+	}
+	#datatable tbody tr td{
+		font-family:Microsoft YaHei;
+		font-size:16px;
+	}
+</style>
+</head> 
+
+<body ng-app='person' ng-controller='personctrl'>
+<% include ../../../../../views/header %>
+<% include ../../../../../views/menu %>
+<div class="container-fluid" id="pcont">
+         <div class="page-head">
+			<h2>人员信息</h2>
+			<ol class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home"></i>  主页</a></li>
+			  <li><a href="#">系统</a></li>
+			  <li><a href="#">人员信息</li>
+			</ol>
+		</div>	
+
+
+		<div class="cl-mcont">
+		
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block-flat">
+					<div class='header'> 
+
+    <button data-toggle="modal" data-target="#mod-success" type="button" class="btn btn-primary btn-rad">新增<i class="fa fa-plus-circle"></i></button>
+                                                                                                                                                                                                                                                                                                                                            
+  </div>
+						<div class="content">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="datatable" >
+									<thead>
+										<tr class="titled">
+											<th width='4%' style='background-color:#3ba8bf;color:white'>序号</th>
+											<th>人员工号</th>
+											<th>人员名称</th>
+											<th>联系方式</th>
+											<th>是否启用</th>
+											<th>操作</th>
+										</tr> 
+									</thead>
+									<tbody >
+										<tr ng-repeat='person in personlist'>
+											<td>{{$index+1}}</td>
+											<td>{{person.Person_No}}</td>
+											<td>{{person.Person_Name}}</td>
+											<td>{{person.Person_Tel}}</td>
+											<td class="center">
+											<div class="switch" data-on="success" data-off="warning" id='{{$index}}'>
+												<input type="checkbox" ng-checked="isSelected(person.Person_Enable)" />
+											</div></td>
+											<td class="center">
+											   <div data-toggle="modal" data-target="#mod-info" class='btn btn-sm btn-info' ng-click='bindModel($index)'>修改<i class='fa fa-pencil'></i></div>
+											   <div data-toggle="modal" data-target="#mod-error" class='btn btn-sm btn-danger' ng-click="bindmodel($index)">删除<i class='fa fa-trash-o'></i></div>
+											</td>
+										</tr>
+									
+									</tbody>
+								</table>							
+							</div>
+						</div>
+					</div>				
+				</div>
+			</div>
+					
+
+			
+		  </div>
+		</div> 
+</div>
+    
+	<!--新增-->
+    <div class="modal fade" id="mod-success" tabindex="-1" role="dialog">
+		    <div class="modal-dialog">
+		    <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            </div>
+                
+                <div class="modal-body">
+		            <div class="text-center">
+			            <h4>新增人员信息<h4>
+			            </div>
+						<div class="form-group">
+			                <label>人员工号</label>
+				            <input type="text" name="" ng-model='person.Person_No' class="form-control">
+			            </div>
+						<div class="form-group">
+						    <label>人员名称</label>
+							<input type="text" name=""  ng-model='person.Person_Name' class="form-control">
+					    </div>
+						<div class="form-group">
+			                <label>联系方式</label>
+				            <input type="number" name="" ng-model='person.Person_Tel' class="form-control">
+			            </div>
+			       
+			    </div>
+			 
+			    <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click='add()'>确认</button>
+			    </div>
+			</div>
+			</div>
+	    </div>
+		
+    <!--修改-->
+    <div class="modal fade" id="mod-info" tabindex="-1" role="dialog">
+		    <div class="modal-dialog">
+		    <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            </div>
+                
+                 <div class="modal-body">
+		            <div class="text-center">
+			            <h4>修改人员信息<h4>
+			            </div>
+						<div class="form-group">
+			                <label>人员工号</label>
+				            <input type="text" name="" ng-model='person.Person_No' class="form-control">
+			            </div>
+						<div class="form-group">
+						    <label>人员名称</label>
+							<input type="text" name=""  ng-model='person.Person_Name' class="form-control">
+					    </div>
+						<div class="form-group">
+			                <label>联系方式</label>
+				            <input type="number" name="" ng-model='person.Person_Tel' class="form-control">
+			            </div>
+			       
+			    </div>
+			 
+			    <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click='updatepersonInfor()'>确认</button>
+			    </div>
+			</div>
+			</div>
+	    </div>
+ 
+		<!--确认删除-->
+		 <div class="modal fade" id="mod-error" tabindex="-1" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="text-center">
+                        <div class="i-circle danger"><i class="fa fa-times"></i></div>
+                        <p>是否确认删除？</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deletepersonInfor($index)">确认删除</button>
+                    </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+							  </div><!-- /.modal -->
+    
+
+  <!-- <script src="js/echarts.js"></script> -->
+<% include ../../../../../views/all_js %>
+<script src='./javascripts/jquery.datatables.min.js'></script>
+<script src='./javascripts/datatables.js'></script>
+<script src='./Common/web/controller/personController.js'></script>
+</body>
+</html>
